@@ -29,6 +29,7 @@ struct ContentView: View {
                             VStack(alignment: .leading) {
                                 Text(book.title)
                                     .font(.headline)
+                                    .foregroundStyle(book.rating == 1 ? .red : .primary)
                                 Text(book.author)
                                     .foregroundStyle(.secondary)
                             }
@@ -56,6 +57,8 @@ struct ContentView: View {
                 DetailView(book: book)
             }
         }
+        .preferredColorScheme(.dark)
+
     }
     
     func deleteBooks(at offsets: IndexSet) {
@@ -70,7 +73,7 @@ struct ContentView: View {
     do {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: Book.self, configurations: config)
-        let example = Book(title: "Test Book", author: "Text Author", genre: "Fantasy", review: "Great book !!", rating: 4)
+        let example = Book(title: "Test Book", author: "Text Author", genre: "Fantasy", review: "Great book !!", rating: 4, date: Date.now)
         
         return ContentView()
             .modelContainer(container)
